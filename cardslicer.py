@@ -1,6 +1,8 @@
 import sys
 import pyvista as pv
 import numpy as np
+from PIL import Image
+import matplotlib.pyplot as plt
 
 def cardslice(mesh, nx, ny):
 
@@ -32,11 +34,12 @@ def cardslice(mesh, nx, ny):
     testplot = pv.Plotter()
     test_slice = mesh.slice()
     testplot.add_mesh(test_slice)
-    print(test_slice)
-    print(test_slice.lines)
-    testplot.view_yz()
-    testplot.show()
-    test_slice.save("/Users/Sen/Desktop/lala", binary = False)
+    points = test_slice.points
+    points = np.delete(points, np.s_[0], 1)
+    x, y = [int(i[0]) for i in points], [int(i[1]) for i in points]
+    plt.scatter(x,y)
+    plt.show()
+
 
 
 
