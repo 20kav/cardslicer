@@ -14,6 +14,14 @@ PyVista (https://github.com/pyvista/pyvista) and dependencies
 Run cardslicer.py
 
 ```
-python3 cardslicer.py [mesh_file] [results_dir] [num_slices_x] [num_slices_y]
+usage: cardslicer.py [h] [file] [dir] [nx] [ny]
+
+arguments:
+	h	 help, show usage
+	file	 mesh file (accepts any format PyVista accepts)
+	dir	 directory to store image results
+	nx	 slices in x-dir
+optional arguments:
+	ny	 slices in y-dir. default = nx
 ```
 
