@@ -28,7 +28,7 @@ def cardslice(mesh, nx, ny):
             plotter.add_mesh(slice_x, color='red')
             sc.clear()
             sc.add_mesh(slice_x, color="black")
-            sc.set_position((2*xmax, slice_x.center[1], slice_x.center[2])) #does not work correctly, need variable distance
+            sc.set_position((3*xmax, slice_x.center[1], slice_x.center[2])) #does not work correctly, need variable distance
             sc.show(screenshot='x_'+str(x)+'.png', auto_close=False)
     for y in np.linspace(ymin,ymax,ny):
         orig = (mesh.center[0], y, mesh.center[2])
@@ -38,7 +38,7 @@ def cardslice(mesh, nx, ny):
             plotter.add_mesh(slice_y, color='blue')
             sc.clear()
             sc.add_mesh(slice_y, color="black")
-            sc.set_position((slice_y.center[1], 2*ymax, slice_y.center[2])) #does not work correctly, need variable distance
+            sc.set_position((slice_y.center[1], 3*ymax, slice_y.center[2])) #does not work correctly, need variable distance
             sc.show(screenshot='y_'+str(y)+'.png', auto_close=False)
     sc.close()
     plotter.show(full_screen=False)
