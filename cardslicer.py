@@ -31,18 +31,15 @@ def cardslice(mesh, dir, nx, ny):
             print("added x-slice")
             plotter.add_mesh(slice_x, color='red')
             sc.clear()
-<<<<<<< HEAD
             print_slice_x = slice_x.copy()
             print_slice_x.translate([-slice_x.center[0], -slice_x.center[1],-slice_x.center[2]])
             sc.add_mesh(print_slice_x, color="black")
             sc.set_position((2*xmax, slice_x.center[1], slice_x.center[2]))
             sc.view_up = ((0,0,1))
             sc.show(screenshot=dir+'/x_'+str(x)+'.png', auto_close=False)
-=======
             sc.add_mesh(slice_x, color="black")
             sc.set_position((3*xmax, slice_x.center[1], slice_x.center[2])) #does not work correctly, need variable distance
             sc.show(screenshot='x_'+str(x)+'.png', auto_close=False)
->>>>>>> 1617fd2c3463e6d09a38aa22838e83f263d86052
     for y in np.linspace(ymin,ymax,ny):
         orig = (mesh.center[0], y, mesh.center[2])
         slice_y = mesh.slice(origin = orig, normal = 'y')
@@ -50,18 +47,15 @@ def cardslice(mesh, dir, nx, ny):
             print("added y-slice")
             plotter.add_mesh(slice_y, color='blue')
             sc.clear()
-<<<<<<< HEAD
             print_slice_y = slice_y.copy()
             print_slice_y.translate([-slice_y.center[0], -slice_y.center[1],-slice_y.center[2]])
             sc.add_mesh(print_slice_y, color="black")
             sc.set_position((slice_y.center[0], 2*ymax, slice_y.center[2]))
             sc.view_up = ((0,0,1))
             sc.show(screenshot=dir+'/y_'+str(y)+'.png', interactive = False, auto_close=False)
-=======
             sc.add_mesh(slice_y, color="black")
             sc.set_position((slice_y.center[1], 3*ymax, slice_y.center[2])) #does not work correctly, need variable distance
             sc.show(screenshot='y_'+str(y)+'.png', auto_close=False)
->>>>>>> 1617fd2c3463e6d09a38aa22838e83f263d86052
     sc.close()
     plotter.show(full_screen=False)
 
@@ -85,11 +79,30 @@ def cardslice(mesh, dir, nx, ny):
 
 if __name__ == "__main__":
     args = sys.argv
-    mesh = pv.read(args[1])
-    dir = args[2]
-    #python3 cardslicer.py -filename -nx -ny
-    nx = int(args[3])
-    ny = nx
-    if len(args) > 4:
-        ny = int(args[4])
-    cardslice(mesh, dir, nx, ny)
+    if len(args) ==2 and args[1]=="help":
+        print('usage: cardslicer.py [h] [file] [dir] [nx] [ny]\n')
+        print('arguments:')
+
+        print('\th\t help, show usage')
+        print('\tfile\t mesh file (accepts any format PyVista accepts)')
+        print('\tdir\t directory to store image results')
+        print('\tnx\t slices in x-dir')
+
+
+        print('optional arguments:')
+        print('\tny\t slices in y-dir. default = nx')
+
+
+        
+        
+        
+        
+    else:
+        mesh = pv.read(args[1])
+        dir = args[2]
+        #python3 cardslicer.py -filename -nx -ny
+        nx = int(args[3])
+        ny = nx
+        if len(args) > 4:
+            ny = int(args[4])
+        cardslice(mesh, dir, nx, ny)
