@@ -36,9 +36,21 @@ def cardslice(mesh, nx, ny):
     testplot.add_mesh(test_slice)
     points = test_slice.points
     points = np.delete(points, np.s_[0], 1)
+    points = points.astype(int)
     x, y = [int(i[0]) for i in points], [int(i[1]) for i in points]
     plt.scatter(x,y)
     plt.show()
+    max_x, max_y = max(x), max(y)
+    
+    image = np.zeros((max_y + 1, max_x + 1))
+
+    for i in range(len(points)):
+        image[max_y - y[i], x[i]] = 1
+    img = Image.fromarray(image, "RGB")
+    img.show()
+    
+
+
 
 
 
