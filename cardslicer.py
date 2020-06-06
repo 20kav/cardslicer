@@ -10,14 +10,16 @@ def cardslice(mesh, dir, nx, ny):
     # slices_y = mesh.slice_along_axis(n=ny, axis="y")
     plotter = pv.Plotter()    # instantiate the plotter
     plotter.add_mesh(mesh, opacity = 0.75)
+    plotter.camera.SetParallelProjection(True)
     center = mesh.center
     plotter.show_grid()
     plotter.show_axes()
     sc = pv.Plotter(off_screen=True)
+    #sc = pv.Plotter()
     sc.set_background('white')
-    
+
     #TEST
-    
+
     t = pv.Plotter()
 
     xmin = mesh.bounds[0]
@@ -32,14 +34,15 @@ def cardslice(mesh, dir, nx, ny):
             plotter.add_mesh(slice_x, color='red')
             sc.clear()
             print_slice_x = slice_x.copy()
-            print_slice_x.translate([-slice_x.center[0], -slice_x.center[1],-slice_x.center[2]])
+            #print_slice_x.translate([-slice_x.center[0], -slice_x.center[1],-slice_x.center[2]])
             sc.add_mesh(print_slice_x, color="black")
+            sc.camera.SetParallelProjection(True)
             sc.set_position((2*xmax, slice_x.center[1], slice_x.center[2]))
-            sc.view_up = ((0,0,1))
+            #sc.view_up = ((0,0,1))
             sc.show(screenshot=dir+'/x_'+str(x)+'.png', auto_close=False)
-            sc.add_mesh(slice_x, color="black")
-            sc.set_position((3*xmax, slice_x.center[1], slice_x.center[2])) #does not work correctly, need variable distance
-            sc.show(screenshot='x_'+str(x)+'.png', auto_close=False)
+            # sc.add_mesh(slice_x, color="black")
+            # sc.set_position((3*xmax+slice_x.center[0], slice_x.center[1], slice_x.center[2])) #does not work correctly, need variable distance
+            # sc.show(screenshot='x_'+str(x)+'.png', auto_close=False)
     for y in np.linspace(ymin,ymax,ny):
         orig = (mesh.center[0], y, mesh.center[2])
         slice_y = mesh.slice(origin = orig, normal = 'y')
@@ -48,14 +51,15 @@ def cardslice(mesh, dir, nx, ny):
             plotter.add_mesh(slice_y, color='blue')
             sc.clear()
             print_slice_y = slice_y.copy()
-            print_slice_y.translate([-slice_y.center[0], -slice_y.center[1],-slice_y.center[2]])
+            #print_slice_y.translate([-slice_y.center[0], -slice_y.center[1],-slice_y.center[2]])
             sc.add_mesh(print_slice_y, color="black")
+            sc.camera.SetParallelProjection(True)
             sc.set_position((slice_y.center[0], 2*ymax, slice_y.center[2]))
-            sc.view_up = ((0,0,1))
+            #sc.view_up = ((0,0,1))
             sc.show(screenshot=dir+'/y_'+str(y)+'.png', interactive = False, auto_close=False)
-            sc.add_mesh(slice_y, color="black")
-            sc.set_position((slice_y.center[1], 3*ymax, slice_y.center[2])) #does not work correctly, need variable distance
-            sc.show(screenshot='y_'+str(y)+'.png', auto_close=False)
+            # sc.add_mesh(slice_y, color="black")
+            # sc.set_position((slice_y.center[1], 3*ymax+slice_y.center[1], slice_y.center[2])) #does not work correctly, need variable distance
+            # sc.show(screenshot='y_'+str(y)+'.png', auto_close=False)
     sc.close()
     plotter.show(full_screen=False)
 
@@ -93,14 +97,14 @@ if __name__ == "__main__":
         print('\tny\t slices in y-dir. default = nx')
 
 
-        
-        
-        
-        
+
+
+
+
     else:
         mesh = pv.read(args[1])
         dir = args[2]
-        #python3 cardslicer.py -filename -nx -ny
+        #python3 cardslicer.py -filename -dir -nx -ny
         nx = int(args[3])
         ny = nx
         if len(args) > 4:
